@@ -4,10 +4,11 @@ const matchSchema = new Schema({
     user1: {
         type: Schema.Types.ObjectId, ref: 'User'
     },
-    user2: {
-        type: Schema.Types.ObjectId, ref: 'User'
+    user1_status: {
+        type: String,
+        enum: ['pending', 'declined', 'accepted']
     },
-    status: {
+    user2_status: {
         type: String,
         enum: ['pending', 'declined', 'accepted']
     }

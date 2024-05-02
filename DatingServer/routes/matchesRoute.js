@@ -1,25 +1,57 @@
-import Match from '../models/matchModel'
-import express from 'express'
+import { Router } from "express";
+import Match from '../models/matchModel.js'
+const matchesRoute = Router()
 
-const matchRoute = express.Router()
 
-matchRoute.get('/match/:userId', (req, res) => {
+
+matchesRoute.get('/matches', async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const currentUser = users.find(user => user.id == userId);
+        const matches = await Match.find().populate('user1').populate('user2')
+        return res.json(matches)
+    }
+    catch (err) {
+        return res.json(err)
+    }
+})
 
-        if (!currentUser) {
-            throw new Error("User not found");
+matchesRoute.get('/match/:matchId', async (req, res) => {
+    const { matchId } = req.params
+    try {
+        const match = await Match.findById(matchId)
+        return res.json(match)
+    }
+    catch (err) {
+        return res.json(err)
+    }
+})
+
+matchesRoute.put('/matches/:userId/:matchId', async (req, res) => {
+    const { userId, matchId } = req.params
+    const { status } = req.body
+    try {
+        const match = await Match.findOne({ _id: matchId, $or: [{ user1: userId }, { user2: userId }] })
+        if (!match) return res.status(404).json('Match not found')
+
+        console.log(typeof match.user1, typeof userId)
+
+        if (match.user1.toString() === userId) {
+            match.user1_status = status
+        }
+        else {
+            match.user2_status = status
         }
 
+        await match.save()
 
-        const potentialMatches = users.filter(user => user.id != userId);
-        const randomIndex = Math.floor(Math.random() * potentialMatches.length);
-        const matchedUser = potentialMatches[randomIndex];
+        return res.json(match)
 
-
-        res.status(200).json(matchedUser);
-    } catch (error) {
-        res.status(404).json({ error: error.message });
     }
-});
+    catch (err) {
+        return res.json(err)
+    }
+
+
+})
+
+
+export default matchesRoute
