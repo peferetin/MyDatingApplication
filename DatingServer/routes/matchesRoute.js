@@ -7,6 +7,7 @@ const matchesRoute = Router()
 matchesRoute.get('/matches', async (req, res) => {
     try {
         const matches = await Match.find().populate('user1').populate('user2')
+
         return res.json(matches)
     }
     catch (err) {

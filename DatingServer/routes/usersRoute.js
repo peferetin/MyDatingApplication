@@ -43,16 +43,14 @@ usersRoute.post('/users/register', upload.single('image'), async (req, res) => {
     const { username, email, password, age, gender, phone } = req.body
     const { type, description, preferences, hobbies, interests } = req.body.profile
     try {
-        console.log(req.body);
+
         const emailVerification = await User.findOne({ email: email })
         if (emailVerification) return res.status(400).json('Email already taken')
         console.log(emailVerification);
 
         const salt = await bcrypt.genSalt(10)
-        console.log(salt);
-        const hashedPassword = await bcrypt.hash(password, salt)
-        console.log(hashedPassword);
 
+        const hashedPassword = await bcrypt.hash(password, salt)
         const newUser = await new User({
             username,
             email,

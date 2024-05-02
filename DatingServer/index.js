@@ -33,7 +33,7 @@ mongoose.connect(process.env.MONGO_URI)
 // })
 
 app.get('/', (req, res) => {
-    res.send('Hello World: Welcome to my Dating Application')
+    res.send('Hello World: Welcome to my Dating App')
 })
 
 
