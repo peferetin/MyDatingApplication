@@ -1,0 +1,23 @@
+#root {
+
+
+}
+
+body{
+
+}
+
+.home-container{
+  background-image: url('./assets/home-background.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  margin: none;
+  width: 100vw;
+  height: 100vh;
+}
+
+.button-container{
+  display: flex;
+  justify-content: center;
+  padding-top: 30px;
+}
