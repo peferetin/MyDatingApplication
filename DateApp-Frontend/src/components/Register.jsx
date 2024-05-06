@@ -48,13 +48,14 @@ export default function SignUp() {
         setGender(event.target.value);
     };
     //  handle submit function helps to send the data to the backend server 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
+
         // preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
         event.preventDefault();
 
         // FormData object lets you compile a set of key/value pairs to send using XMLHttpRequest. It is primarily intended for sending form data, but can be used independently from forms in order to transmit keyed data. The transmitted data is in the same format that the form's submit() method would use to send the data if the form's encoding type were set to "multipart/form-data".   
         const data = new FormData(event.currentTarget);
-        console.log({
+        await register({
             email: data.get('email'),
             password: data.get('password'),
             username: data.get('username'),
@@ -64,6 +65,9 @@ export default function SignUp() {
 
 
         });
+        if (register) {
+            navigate('/login')
+        }
     };
 
     return (

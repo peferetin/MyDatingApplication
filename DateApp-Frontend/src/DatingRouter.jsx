@@ -2,6 +2,7 @@ import Home from './Home.jsx'
 import { Routes, Route } from 'react-router-dom'
 import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
+import Match from './components/Match.jsx'
 
 const DatingRouter = () => {
 
@@ -11,6 +12,7 @@ const DatingRouter = () => {
                 <Route path='/' element={<Home />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='/matches' element={<Match />} />
                 <Route path='*' element={<p>404 page not found</p>} />
             </Routes>
         </>

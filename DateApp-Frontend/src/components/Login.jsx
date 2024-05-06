@@ -13,6 +13,8 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { login } from '../utils/authFunctions.js'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import { AuthContext } from '../context/authContext.jsx'
 
 function Copyright(props) {
     return (
@@ -35,11 +37,23 @@ export default function SignInSide() {
 
     let navigate = useNavigate()
 
+    const { login } = useContext(AuthContext)
+
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = new FormData(event.currentTarget);
-        await login({ email: data.get('email'), password: data.get('password') }).then(res => navigate('/match'))
+        try {
+            const data = new FormData(event.currentTarget);
+            await login({ email: data.get('email'), password: data.get('password') })
+            await login()
+            navigate('/matches')
+        }
+        catch (err) {
+            console.log('Login error', err)
+        }
+        finally {
+            console.log('Login successful')
+        }
     };
 
     return (

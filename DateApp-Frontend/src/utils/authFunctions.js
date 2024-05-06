@@ -23,18 +23,18 @@ export const login = async (user) => {
 export const register = async (user) => {
     console.log(user);
     try {
-        const regUser = await axios.post('http://localhost:8000/api/register',
-            {
-                email: user.email,
-                password: user.password,
-                username: user.username,
-                description: user.description,
-                preferences: user.preferences,
-                hobbies: user.hobbies,
-                interests: user.interests
-            })
-        // localStorage.setItem('token', regUser.data)
-        console.log(regUser);
+        const regUser = await axios.post('http://localhost:8000/api/register', user)
+        // {
+        //     email: user.email,
+        //     password: user.password,
+        //     username: user.username,
+        //     description: user.description,
+        //     preferences: user.preferences,
+        //     hobbies: user.hobbies,
+        //     interests: user.interests
+        // })
+
+
     }
 
     catch (err) {
