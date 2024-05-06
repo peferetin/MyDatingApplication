@@ -12,13 +12,21 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { register } from '../utils/authFunctions.js';
+
 
 function Copyright(props) {
     return (
         <Typography variant="body2" color="text.secondary" align="center" {...props}>
             {'Copyright © '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                My dating App.
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -31,12 +39,30 @@ function Copyright(props) {
 const defaultTheme = createTheme();
 
 export default function SignUp() {
+    let navigate = useNavigate()
+
+    const [gender, setGender] = useState('')
+
+
+    const handleChange = (event) => {
+        setGender(event.target.value);
+    };
+    //  handle submit function helps to send the data to the backend server 
     const handleSubmit = (event) => {
+        // preventDefault() method cancels the event if it is cancelable, meaning that the default action that belongs to the event will not occur.
         event.preventDefault();
+
+        // FormData object lets you compile a set of key/value pairs to send using XMLHttpRequest. It is primarily intended for sending form data, but can be used independently from forms in order to transmit keyed data. The transmitted data is in the same format that the form's submit() method would use to send the data if the form's encoding type were set to "multipart/form-data".   
         const data = new FormData(event.currentTarget);
         console.log({
             email: data.get('email'),
             password: data.get('password'),
+            username: data.get('username'),
+            age: data.get('age'),
+            phone: data.get('phone'),
+            gender: gender.toLocaleLowerCase()
+
+
         });
     };
 
@@ -68,11 +94,11 @@ export default function SignUp() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     autoComplete="given-name"
-                                    name="firstName"
+                                    name="username"
                                     required
                                     fullWidth
-                                    id="firstName"
-                                    label="First Name"
+                                    id="username"
+                                    label="Username"
                                     autoFocus
                                 />
                             </Grid>
@@ -80,9 +106,9 @@ export default function SignUp() {
                                 <TextField
                                     required
                                     fullWidth
-                                    id="lastName"
-                                    label="Last Name"
-                                    name="lastName"
+                                    id="age"
+                                    label="Age"
+                                    name="age"
                                     autoComplete="family-name"
                                 />
                             </Grid>
@@ -107,6 +133,30 @@ export default function SignUp() {
                                     autoComplete="new-password"
                                 />
                             </Grid>
+                            <FormControl item xs={12} sx={{ minWidth: 120, mt: 3, ml: 2 }} >
+                                <InputLabel id="demo-simple-select-label">Gender</InputLabel>
+                                <Select
+                                    labelId="demo-simple-select-label"
+                                    id="demo-simple-select"
+                                    value={gender}
+                                    label="Gender"
+                                    onChange={handleChange}
+
+                                >
+                                    <MenuItem value={'Male'}>Male</MenuItem>
+                                    <MenuItem value={'Female'}>Female</MenuItem>
+                                    <MenuItem value={'Non-binary'}>Non-binary</MenuItem>
+                                </Select>
+                            </FormControl>
+                            <Grid item xs={12} sm={6} sx={{ mt: 1 }}>
+                                <TextField
+                                    required
+                                    fullWidth
+                                    id="phone"
+                                    label="phone"
+                                    name="phone"
+                                />
+                            </Grid>
                             <Grid item xs={12}>
                                 <FormControlLabel
                                     control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -124,7 +174,7 @@ export default function SignUp() {
                         </Button>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link href="/login" variant="body2">
                                     Already have an account? Sign in
                                 </Link>
                             </Grid>
@@ -136,3 +186,4 @@ export default function SignUp() {
         </ThemeProvider>
     );
 }
+

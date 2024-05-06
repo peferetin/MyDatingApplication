@@ -81,13 +81,13 @@ usersRoute.post('/register', upload.single('image'), async (req, res) => {
             age,
             gender,
             phone,
-            profile: {
-                type,
-                description,
-                preferences,
-                hobbies,
-                interests
-            }
+            // profile: {
+            //     type,
+            //     description,
+            //     preferences,   //  not needed yet 
+            //     hobbies,
+            //     interests
+            // }
         })
         newUser.save()
         return res.status(201).json(newUser)
