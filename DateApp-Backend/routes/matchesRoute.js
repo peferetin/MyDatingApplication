@@ -66,4 +66,15 @@ matchesRoute.get('/matches/accepted/:userId', async (req, res) => {
     }
 
 })
+
+matchesRoute.get('/matches/declined/:userId', async (req, res) => {
+    const { userId } = req.params
+    try {
+        const matches = await Match.find({ $or: [{ user1: userId }, { user2: userId }], user1_status: 'declined', user2_status: 'declined' })
+        return res.json(matches)
+
+    } catch (err) {
+        return res.json(err)
+    }
+})
 export default matchesRoute
